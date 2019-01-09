@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import Form from './components/Form';
 import WeatherInfo from './components/WeatherInfo';
-import DefaultImg from './img/simon-wilkes-345755-unsplash.jpg';
-import ClearImg from './img/ian-dooley-407846-unsplash.jpg';
-import CloudsImg from './img/lukasz-lada-275650-unsplash.jpg';
-import RainImg from './img/gabriele-diwald-201135-unsplash.jpg';
-import DrizzleImg from './img/christian-wiediger-672094-unsplash.jpg';
-import MistImg from './img/ricardo-gomez-angel-223577-unsplash.jpg';
-import StormImg from './img/layne-lawson-101816-unsplash.jpg';
-import SnowImg from './img/nathan-fertig-371188-unsplash.jpg';
+import DefaultImg from './assets/img/simon-wilkes-345755-unsplash.jpg';
+import ClearImg from './assets/img/ian-dooley-407846-unsplash.jpg';
+import CloudsImg from './assets/img/lukasz-lada-275650-unsplash.jpg';
+import RainImg from './assets/img/gabriele-diwald-201135-unsplash.jpg';
+import DrizzleImg from './assets/img/christian-wiediger-672094-unsplash.jpg';
+import MistImg from './assets/img/ricardo-gomez-angel-223577-unsplash.jpg';
+import StormImg from './assets/img/layne-lawson-101816-unsplash.jpg';
+import SnowImg from './assets/img/nathan-fertig-371188-unsplash.jpg';
 
 //register to OpenWeatherMap and paste API key here
 const API_KEY = "37ed176a584be416c6960e386d5d239c";
@@ -83,7 +83,6 @@ class App extends Component {
         <img id="background" src={this.setBackground(this.state.weather)} alt="background" />
         <div className="container">
           <h1>Current weather</h1>
-          <Form getWeather={this.getWeather} />
           <WeatherInfo
             city={this.state.city}
             country={this.state.country}
@@ -96,6 +95,8 @@ class App extends Component {
             visibility={this.state.visibility}
             error={this.state.error}
           />
+          <br></br>
+          <Form getWeather={this.getWeather} />
         </div>
       </div>
     );
