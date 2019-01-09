@@ -6,7 +6,7 @@ const WeatherInfo = (props) => {
         (city && country) ?
             (
                 <div>
-                    <h2>{city}, {country}</h2>
+                    <h1>{city}</h1>
                     <h1>{temperature} °</h1>
                     <h2>{description}</h2>
                     <p>{pressure} hPa</p>

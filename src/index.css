@@ -6,6 +6,79 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: white;
+}
+
+
+input[type="text"]
+{
+    background: transparent;
+    border: none;
+    border-bottom: 2px dotted #FFF;
+    color: white;
+    margin: 0 5px;
+    outline: none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-animation: autofill 0s forwards;
+    animation: autofill 0s forwards;
+}
+
+@keyframes autofill {
+    100% {
+        background: transparent;
+        color: inherit;
+    }
+}
+
+@-webkit-keyframes autofill {
+    100% {
+        background: transparent;
+        color: inherit;
+    }
+}
+
+::placeholder{
+	color: #fff !important;
+}
+
+input:focus, textarea:focus {
+	background: rgba(255,255,255, 0.3);
+}
+
+button{
+  background: none;
+  border: 2px solid #fff;
+  border-radius: 20px;
+  padding: 10px;
+  font-weight: bold;
+  color: white;
+}
+
+#main{
+  width: 100%;
+  height: 100vh;
+}
+
+.container{
+  position: absolute;
+  text-align: center;
+ top: 30vh;
+ left: 50%;
+ transform: translate(-50%, -50%);
+}
+
+#background{
+  display: block;
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  overflow: hidden;
+  z-index: -1;
 }
 
 code {
