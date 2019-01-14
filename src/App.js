@@ -15,9 +15,13 @@ const API_KEY = "37ed176a584be416c6960e386d5d239c";
 let units = "metric"; //imperial also available
 
 class App extends Component {
-  state = {}
+  state = {
+    weather: null,
+    weatherInfo: null,
+    error: "",
+    newLocation: false,
+  }
   setBackground = (weatherDescription) => {
-    console.log(weatherDescription);
     switch (weatherDescription) {
       case "Clear":
         return ClearImg;
@@ -46,58 +50,66 @@ class App extends Component {
         `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&APPID=${API_KEY}&units=${units}`
       ).then(resp => resp.json());
       console.log(data);
-      this.setState({
+      const weather = data.weather[0].main;
+      const weatherInfo = {
         city: data.name,
         country: data.sys.country,
         temperature: data.main.temp,
-        weather: data.weather[0].main,
         description: data.weather[0].description,
         pressure: data.main.pressure,
         wind_deg: data.wind.deg,
         wind_speed: data.wind.speed,
         humidity: data.main.humidity,
-        visibility: data.visibility,
-        error: ""
-      })
+      }
+      this.setState({ weather, weatherInfo, newLocation: false })
       console.log(this.state);
     }
     catch (err) {
       this.setState({
-        city: undefined,
-        country: undefined,
-        temperature: undefined,
-        weather: undefined,
-        description: undefined,
-        pressure: undefined,
-        wind_deg: undefined,
-        wind_speed: undefined,
-        humidity: undefined,
-        visibility: undefined,
+        weather: null,
+        weatherInfo: null,
         error: "Please enter valid values."
       })
     }
   };
+
+  newLocation = () => {
+    console.log("click")
+    this.setState({
+      weather: null,
+      weatherInfo: null,
+      newLocation: true,
+    })
+  }
+
   render() {
+    const {
+      weather,
+      weatherInfo,
+      error,
+      newLocation,
+    } = this.state;
     return (
-      <div id="main">
-        <img id="background" src={this.setBackground(this.state.weather)} alt="background" />
-        <div className="container">
-          <h1>Current weather</h1>
+      <div>
+        <img id="background" src={this.setBackground(weather)} alt="background" />
+        {(weather && weatherInfo && !newLocation) ? (
           <WeatherInfo
-            city={this.state.city}
-            country={this.state.country}
-            temperature={this.state.temperature}
-            description={this.state.description}
-            pressure={this.state.pressure}
-            wind_deg={this.state.wind_deg}
-            wind_speed={this.state.wind_speed}
-            humidity={this.state.humidity}
-            visibility={this.state.visibility}
-            error={this.state.error}
+            city={weatherInfo.city}
+            country={weatherInfo.country}
+            temperature={weatherInfo.temperature}
+            description={weatherInfo.description}
+            pressure={weatherInfo.pressure}
+            wind_deg={weatherInfo.wind_deg}
+            wind_speed={weatherInfo.wind_speed}
+            humidity={weatherInfo.humidity}
+            error={weatherInfo.error}
+            newLocation={this.newLocation}
           />
-          <br></br>
-          <Form getWeather={this.getWeather} />
-        </div>
+        )
+          :
+          (
+            <Form getWeather={this.getWeather} error={error} />
+          )}
       </div>
     );
   }
