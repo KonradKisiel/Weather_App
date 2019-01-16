@@ -26,18 +26,48 @@ body {
   opacity: 0.87;
 }
 
-#temperatureBig{
-  font-size: 80px;
+.container{
+  width: 360px;
+  position: absolute;
+  text-align: center;
+ top: 37vh;
+ left: 50%;
+ transform: translate(-50%, -50%);
+}
+
+#tempBig{
+  font-size:100px;
+  line-height: 0px;
+  margin: 0;
   /*font-family: 'soriasoria';*/
 }
 
 h1{
-  font-size: 60px;
-  letter-spacing: 3px;
+  font-size: 50px;
+  letter-spacing: 1px;
+  line-height: 50px;
 }
 
 .capitalize{
   text-transform: capitalize;
+}
+
+h2{
+  font-size: 34px;
+}
+
+.weatherIcon{
+  transform: translate(-23%, -25%);
+}
+
+#tempUnit{
+  font-size: 60px;
+  margin-left: -96px;
+}
+
+#infoBar div{
+  width: 100px;
+  display: inline-block;
 }
 
 label, input, button{
@@ -96,7 +126,7 @@ input:focus, textarea:focus {
 
 button{
   background: none;
-  border: 1.3px solid #fff;
+  border: 1.5px solid #fff;
   border-radius: 30px;
   padding: 13px;
   color: white;
@@ -104,10 +134,4 @@ button{
   cursor: pointer;
 }
 
-.container{
-  position: absolute;
-  text-align: center;
- top: 43vh;
- left: 50%;
- transform: translate(-50%, -50%);
-}
+
