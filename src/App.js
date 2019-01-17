@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Form from './components/Form';
-
 import WeatherInfo from './components/WeatherInfo';
+import Forecast from './components/Forecast';
+
 import DefaultImg from './assets/img/simon-wilkes-345755-unsplash.jpg';
 import ClearImg from './assets/img/ian-dooley-407846-unsplash.jpg';
 import CloudsImg from './assets/img/lukasz-lada-275650-unsplash.jpg';
@@ -33,6 +34,7 @@ class App extends Component {
   state = {
     weather: null,
     currentWeather: null,
+    forecast: null,
     error: "",
     newLocation: false,
   }
@@ -124,7 +126,7 @@ class App extends Component {
     }
     */
 
-  getCurrentWeather = async (e) => {
+  getWeather = async (e) => {
     e.preventDefault();
     const city = e.target.elements.city.value;
     const country = e.target.elements.country.value;
@@ -156,12 +158,35 @@ class App extends Component {
         error: "Please enter valid values"
       })
     }
+
+    try {
+      let data = await fetch(
+        `http://api.openweathermap.org/data/2.5/forecast?q=${city},${country}&APPID=${API_KEY}&units=${units}`
+      ).then(resp => resp.json());
+      console.log(data)
+      data = data.list;
+      const forecastData = data.map((forecast) => {
+        return {
+          date: new Date(forecast.dt * 1000),
+          icon: this.setIcon(forecast.weather[0].icon),
+          temperature: forecast.main.temp,
+          humidity: forecast.main.humidity
+        }
+      })
+      console.log(forecastData)
+      this.setState({
+        forecast: forecastData
+      })
+    } catch (err) {
+      console.log(err)
+    }
   };
 
   newLocation = () => {
     this.setState({
       weather: null,
       currentWeather: null,
+      forecast: null,
       newLocation: true,
     })
   }
@@ -170,21 +195,25 @@ class App extends Component {
     const {
       weather,
       currentWeather,
+      forecast,
       error,
       newLocation,
     } = this.state;
     return (
       <div>
         <img id="background" src={this.setBackground(weather)} alt="background" />
-        {(weather && currentWeather && !newLocation) ? (
-          <WeatherInfo
-            weatherInfo={currentWeather}
-            newLocation={this.newLocation}
-          />
+        {(weather && currentWeather && forecast && !newLocation) ? (
+          <div>
+            <WeatherInfo
+              weatherInfo={currentWeather}
+              newLocation={this.newLocation}
+            />
+            <Forecast id="forecast" forecast={forecast} />
+          </div>
         )
           :
           (
-            <Form getWeather={this.getCurrentWeather} error={error} />
+            <Form getWeather={this.getWeather} error={error} />
           )}
       </div>
     );

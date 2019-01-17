@@ -29,10 +29,12 @@ const WeatherInfo = (props) => {
                 </svg> {wind_speed}m/s
                 </div>
             </div>
-            <br></br>
+            {/*
+                        <br></br>
             <br></br>
             <br></br>
             <button onClick={props.newLocation}>Change location</button>
+             */}
         </div>
     )
 }
