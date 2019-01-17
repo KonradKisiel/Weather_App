@@ -32,7 +32,7 @@ let units = "metric"; //imperial also available
 class App extends Component {
   state = {
     weather: null,
-    weatherInfo: null,
+    currentWeather: null,
     error: "",
     newLocation: false,
   }
@@ -102,14 +102,14 @@ class App extends Component {
         dt: 1547636400,
         id: 292223,
         main: { temp: 27.67, pressure: 1014, humidity: 37, temp_min: 27, temp_max: 28 },
-        name: "Dubai",
-        sys: { type: 1, id: 7537, message: 0.0021, country: "AE", sunrise: 1547607963, sunset: 1547646676 },
+        name: "San Francisco",
+        sys: { type: 1, id: 7537, message: 0.0021, country: "US", sunrise: 1547607963, sunset: 1547646676 },
         visibility: 10000,
         weather: [{ id: 800, main: "Clear", description: "clear sky", icon: "01d" }],
         wind: { speed: 4.6, deg: 320 },
       }
       const weather = data.weather[0].main;
-      const weatherInfo = {
+      const currentWeather = {
         city: data.name,
         country: data.sys.country,
         temperature: data.main.temp,
@@ -120,10 +120,11 @@ class App extends Component {
         humidity: data.main.humidity,
         icon: this.setIcon(data.weather[0].icon)
       }
-      this.setState({ weather, weatherInfo, newLocation: false })
+      this.setState({ weather, currentWeather, newLocation: false })
     }
     */
-  getWeather = async (e) => {
+
+  getCurrentWeather = async (e) => {
     e.preventDefault();
     const city = e.target.elements.city.value;
     const country = e.target.elements.country.value;
@@ -133,8 +134,9 @@ class App extends Component {
       ).then(resp => resp.json());
       console.log(data);
       const weather = data.weather[0].main;
-      const weatherInfo = {
+      const currentWeather = {
         city: data.name,
+        date: new Date(data.dt * 1000),
         country: data.sys.country,
         temperature: data.main.temp,
         description: data.weather[0].description,
@@ -144,13 +146,13 @@ class App extends Component {
         humidity: data.main.humidity,
         icon: this.setIcon(data.weather[0].icon)
       }
-      this.setState({ weather, weatherInfo, newLocation: false })
+      this.setState({ weather, currentWeather, newLocation: false })
       console.log(this.state);
     }
     catch (err) {
       this.setState({
         weather: null,
-        weatherInfo: null,
+        currentWeather: null,
         error: "Please enter valid values"
       })
     }
@@ -159,7 +161,7 @@ class App extends Component {
   newLocation = () => {
     this.setState({
       weather: null,
-      weatherInfo: null,
+      currentWeather: null,
       newLocation: true,
     })
   }
@@ -167,22 +169,22 @@ class App extends Component {
   render() {
     const {
       weather,
-      weatherInfo,
+      currentWeather,
       error,
       newLocation,
     } = this.state;
     return (
       <div>
         <img id="background" src={this.setBackground(weather)} alt="background" />
-        {(weather && weatherInfo && !newLocation) ? (
+        {(weather && currentWeather && !newLocation) ? (
           <WeatherInfo
-            weatherInfo={weatherInfo}
+            weatherInfo={currentWeather}
             newLocation={this.newLocation}
           />
         )
           :
           (
-            <Form getWeather={this.getWeather} error={error} />
+            <Form getWeather={this.getCurrentWeather} error={error} />
           )}
       </div>
     );
