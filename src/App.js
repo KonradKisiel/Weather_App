@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Form from './components/Form';
 import WeatherInfo from './components/WeatherInfo';
-import Forecast from './components/Forecast';
 
 import DefaultImg from './assets/img/simon-wilkes-345755-unsplash.jpg';
 import ClearImg from './assets/img/ian-dooley-407846-unsplash.jpg';
@@ -146,7 +145,10 @@ class App extends Component {
         wind_deg: data.wind.deg,
         wind_speed: data.wind.speed,
         humidity: data.main.humidity,
-        icon: this.setIcon(data.weather[0].icon)
+        icon: this.setIcon(data.weather[0].icon),
+        cloudiness: data.clouds.all,
+        sunrise: new Date(data.sys.sunrise * 1000),
+        sunset: new Date(data.sys.sunset * 1000)
       }
       this.setState({ weather, currentWeather, newLocation: false })
       console.log(this.state);
@@ -169,7 +171,7 @@ class App extends Component {
         return {
           date: new Date(forecast.dt * 1000),
           icon: this.setIcon(forecast.weather[0].icon),
-          temperature: forecast.main.temp,
+          temperature: Math.floor(forecast.main.temp),
           humidity: forecast.main.humidity
         }
       })
@@ -207,8 +209,8 @@ class App extends Component {
             <WeatherInfo
               weatherInfo={currentWeather}
               newLocation={this.newLocation}
+              forecast={forecast}
             />
-            <Forecast id="forecast" forecast={forecast} />
           </div>
         )
           :
