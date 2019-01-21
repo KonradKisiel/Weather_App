@@ -17,7 +17,8 @@ body {
   font-family: 'lato', sans-serif;
   color: #FFF;
   background: #000;
-    font-size: 21px;
+    font-size: 20px;
+    /* font-size: 3.2vh; */
 }
 
 #background{
@@ -31,10 +32,10 @@ body {
 }
 
 .container{
+  width: 360px;
   position: absolute;
   text-align: center;
-  height: 100vh;
-  top: 52vh;
+  top: 50vh;
   left: 50%;
   transform: translate(-50%, -50%);
 }
@@ -47,6 +48,7 @@ h1{
 }
 
 .infoBar{
+  width: 360px;
   margin-bottom: 15px;
 }
 
@@ -86,8 +88,11 @@ h1{
 
 #forecast{
   margin-top: 10px;
-  height: 300px;
-  overflow-x: hidden;
+  width: 90vw;
+  overflow: hidden;
+}
+
+#forecastWindow{
   width: 4000px;
   display: inline-block;
 }
