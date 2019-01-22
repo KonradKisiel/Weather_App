@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Form from './components/Form';
 import WeatherInfo from './components/WeatherInfo';
+import ForecastCarousel from './components/ForecastCarousel';
 
 import DefaultImg from './assets/img/simon-wilkes-345755-unsplash.jpg';
 import ClearImg from './assets/img/ian-dooley-407846-unsplash.jpg';
@@ -175,9 +176,17 @@ class App extends Component {
           humidity: forecast.main.humidity
         }
       })
-      console.log(forecastData)
+
+      //slice data for arrays proper to window width
+      let elements = Math.floor((window.innerWidth - 20) / 110);
+      let slicedData = [];
+      for (let i = 0; i < forecastData.length; i += elements) {
+        slicedData.push(forecastData.slice(i, i + elements));
+      }
+
+      console.log(slicedData)
       this.setState({
-        forecast: forecastData
+        forecast: slicedData
       })
     } catch (err) {
       console.log(err)
@@ -202,7 +211,7 @@ class App extends Component {
       newLocation,
     } = this.state;
     return (
-      <div>
+      <div id="mainContainer">
         <img id="background" src={this.setBackground(weather)} alt="background" />
         {(weather && currentWeather && forecast && !newLocation) ? (
           <div>
@@ -211,6 +220,7 @@ class App extends Component {
               newLocation={this.newLocation}
               forecast={forecast}
             />
+            <ForecastCarousel forecast={forecast} />
           </div>
         )
           :

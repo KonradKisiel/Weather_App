@@ -1,19 +1,18 @@
-/********************************************
-	BREAKPOINT WIDTHS
-********************************************/
-/********************************************
-	FONTS
-********************************************/
-/********************************************
-	COLOURS
-********************************************/
-
+/*
 .dummyDiv{
   width: 100px;
-  height: 270px;
+  height: 250px;
   display: inline-block;
   background: white;
   margin: 5px 5px 30px 5px;
+}
+*/
+.forecastCarousel{
+  margin-top: 55vh;
+  /*
+  position: fixed;
+  bottom: 40px;
+  */
 }
 
 .carousel .control-arrow, .carousel.carousel-slider .control-arrow {
@@ -24,7 +23,7 @@
   transition: all 0.25s ease-in;
   position: absolute;
   z-index: 2;
-  top: 20px;
+  bottom: 0px;
   background: none;
   border: 0;
   font-size: 32px;
@@ -127,6 +126,7 @@
        /* background: rgba(0, 0, 0, 0.2); */ }
   .carousel .slider-wrapper {
     overflow: hidden;
+    padding-top: 30px;
     margin: auto;
     width: 100%;
     -webkit-transition: height 0.15s ease-in;
@@ -206,9 +206,8 @@
       -o-transition: opacity 0.35s ease-in-out;
       transition: opacity 0.35s ease-in-out; }
   .carousel .control-dots {
-    position: absolute;
-    bottom: 0;
-    margin: 10px 0;
+    position: fixed;
+    top: 52vh;
     text-align: center;
     width: 100%; }
     .carousel .control-dots .dot {

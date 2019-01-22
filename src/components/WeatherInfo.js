@@ -1,6 +1,4 @@
 import React from 'react';
-import Forecast from './Forecast';
-import DemoCarousel from './DemoCarousel';
 
 const WeatherInfo = (props) => {
     const { city,
@@ -17,7 +15,7 @@ const WeatherInfo = (props) => {
         sunset } = props.weatherInfo;
     const rotation = 'rotate(' + wind_deg + ')';
     return (
-        <div className="container">
+        <div className="container360">
             <p>{date.toDateString()}</p>
             <h1 className="header">{city}</h1>
             <div className="infoBar">
@@ -38,7 +36,7 @@ const WeatherInfo = (props) => {
                 </div>
             </div>
             <h1 id="tempBig">{Math.floor(temperature)}<img className="weatherIcon" src={icon} alt="weather icon" /><span id="tempUnit">C</span></h1>
-            <h2 className="capitalize">{description}</h2>
+            <h2 id="weatherDescription">{description}</h2>
             <div className="infoBar">
                 <div>
                     <svg className="infoSvg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#fff">
@@ -68,7 +66,6 @@ const WeatherInfo = (props) => {
              
             <Forecast forecast={props.forecast} />
              */}
-            <DemoCarousel />
         </div>
     )
 }
