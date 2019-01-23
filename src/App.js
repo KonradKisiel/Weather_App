@@ -211,22 +211,24 @@ class App extends Component {
       newLocation,
     } = this.state;
     return (
-      <div id="mainContainer">
+      <div>
         <img id="background" src={this.setBackground(weather)} alt="background" />
-        {(weather && currentWeather && forecast && !newLocation) ? (
-          <div>
-            <WeatherInfo
-              weatherInfo={currentWeather}
-              newLocation={this.newLocation}
-              forecast={forecast}
-            />
-            <ForecastCarousel forecast={forecast} />
-          </div>
-        )
-          :
-          (
-            <Form getWeather={this.getWeather} error={error} />
-          )}
+        <div className="mainContainer">
+          {(weather && currentWeather && forecast && !newLocation) ? (
+            <div>
+              <WeatherInfo
+                weatherInfo={currentWeather}
+                newLocation={this.newLocation}
+                forecast={forecast}
+              />
+              <ForecastCarousel forecast={forecast} />
+            </div>
+          )
+            :
+            (
+              <Form getWeather={this.getWeather} error={error} />
+            )}
+        </div>
       </div>
     );
   }
