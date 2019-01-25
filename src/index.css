@@ -45,8 +45,11 @@ h2 {
 h3 {
     font-size:  1.27em;
 }
-p {
-    font-size: 1em;
+p, label{
+    font-size: 1.1em;
+}
+span{
+  font-size: 0.9em;
 }
 
   .mainCointainer{
@@ -71,40 +74,83 @@ p {
   object-fit: cover;
   overflow: hidden;
   z-index: -1;
-  opacity: 0.82;
+  opacity: 0.8;
+}
+
+#mainTemp{
+  border-top: 6px solid #fff;
+  border-radius: 100%;
+  margin: 35px 50px -95px 50px;
+  height: 200px;
+  padding: 45px 15px 0px 15px;
+}
+
+#riseSet{
+  margin: auto;
+  position: relative;
+  bottom: 22px;
+  width: 285px;
 }
 
 .header{
-  margin-top: 0.2em;
+  margin: 0.2em 0 0.05em;
   font-size: 3.1em;
   letter-spacing: 0.03em;
   line-height: 0.9em;
 }
 
-#sunPosition{
-  width: 120px;
-  height: 10px;
-  border-bottom: 2px solid white;
-}
-
 #weatherDescription{
+  clear: both;
   text-transform: capitalize;
   font-size: 2.2em;
 }
 
+.leftAlign{
+  text-align: left;
+  float: left;
+}
+
+.rightAlign{
+  text-align: right;
+  float: right;
+}
+
+#sunBar{
+  border-bottom: 2px solid #FFF;
+  width: 300px;
+  margin: 0.5em auto 0 auto;
+}
+
+#sunPosition{
+  margin-left: -12px;
+  position: fixed;
+  height: 305px;
+  transform: rotate(90deg);
+  /*
+  left: -145px;
+  top: 175px;
+  */
+}
+
 .infoBar{
   width: 360px;
-  margin-bottom: 0.9em;
+  margin: 0.5em auto;
+  clear: both;
 }
 
 .infoBar div{
-  width: 110px;
+  width: 113px;
   display: inline-block;
+}
+
+.forecastElement img{
+  margin: -0.3em 0;
+  height: 90px;
 }
 
 .infoBar svg, .forecastElement svg {
   position: relative;
-  top: 0.22em;
+  top: 3px;
   right: 0.22em;
   /*
   top: 5px;
@@ -113,19 +159,18 @@ p {
 }
 
 #tempBig{
-  font-size:5.56em;
-  /*font-family: 'soriasoria';*/
+  font-size:4.1em;
 }
 
 .weatherIcon{
  /* transform: translate(-25%, -25%); */
  position: relative;
- top: -0.25em;
- left: -25px;
+ top: -0.23em;
+ left: -22px;
 }
 
 #tempUnit{
-  font-size: 0.6em;
+  font-size: 0.58em;
   margin-left: -95px;
 }
 

@@ -152,13 +152,12 @@ class App extends Component {
         sunset: new Date(data.sys.sunset * 1000)
       }
       this.setState({ weather, currentWeather, newLocation: false })
-      console.log(this.state);
     }
     catch (err) {
       this.setState({
         weather: null,
         currentWeather: null,
-        error: "Please enter valid values"
+        error: "Please enter valid values" // '"' + err + '"'
       })
     }
 
@@ -166,14 +165,15 @@ class App extends Component {
       let data = await fetch(
         `http://api.openweathermap.org/data/2.5/forecast?q=${city},${country}&APPID=${API_KEY}&units=${units}`
       ).then(resp => resp.json());
-      console.log(data)
       data = data.list;
+      console.log(data);
       const forecastData = data.map((forecast) => {
         return {
           date: new Date(forecast.dt * 1000),
           icon: this.setIcon(forecast.weather[0].icon),
           temperature: Math.floor(forecast.main.temp),
-          humidity: forecast.main.humidity
+          description: forecast.weather[0].main
+          /* humidity: forecast.main.humidity */
         }
       })
 
@@ -183,8 +183,6 @@ class App extends Component {
       for (let i = 0; i < forecastData.length; i += elements) {
         slicedData.push(forecastData.slice(i, i + elements));
       }
-
-      console.log(slicedData)
       this.setState({
         forecast: slicedData
       })
