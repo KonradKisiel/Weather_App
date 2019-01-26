@@ -135,10 +135,13 @@ class App extends Component {
         `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&APPID=${API_KEY}&units=${units}`
       ).then(resp => resp.json());
       console.log(data);
+      let currentData = new Date(Date.now());
+      //to fix, currentWeather.weather doesn't work for background
       const weather = data.weather[0].main;
       const currentWeather = {
         city: data.name,
-        date: new Date(data.dt * 1000),
+        coord: data.coord,
+        date: currentData,//new Date(data.dt * 1000), //Date.now(),
         country: data.sys.country,
         temperature: data.main.temp,
         description: data.weather[0].description,
@@ -216,10 +219,10 @@ class App extends Component {
             <div>
               <WeatherInfo
                 weatherInfo={currentWeather}
-                newLocation={this.newLocation}
                 forecast={forecast}
               />
               <ForecastCarousel forecast={forecast} />
+              <button onClick={this.newLocation}>Change location</button>
             </div>
           )
             :

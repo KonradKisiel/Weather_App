@@ -13,8 +13,6 @@ const Form = (props) => {
         <label htmlFor="city">Country:</label>
         <input type="text" name="country" /><br></br>
         <p>{props.error}</p>
-        <br></br>
-        <br></br>
         <button>Get weather</button>
       </form>
     </div>

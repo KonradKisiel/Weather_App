@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = function has3d() {
     if (typeof window === 'undefined' || !window.getComputedStyle) {
         return false;
@@ -8,12 +6,12 @@ module.exports = function has3d() {
     var el = document.createElement('p'),
         has3d,
         transforms = {
-        'webkitTransform': '-webkit-transform',
-        'OTransform': '-o-transform',
-        'msTransform': '-ms-transform',
-        'MozTransform': '-moz-transform',
-        'transform': 'transform'
-    };
+            'webkitTransform': '-webkit-transform',
+            'OTransform': '-o-transform',
+            'msTransform': '-ms-transform',
+            'MozTransform': '-moz-transform',
+            'transform': 'transform'
+        };
 
     // Add it to the body to get the computed style.
     document.body.insertBefore(el, null);

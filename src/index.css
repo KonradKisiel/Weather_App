@@ -52,10 +52,10 @@ span{
   font-size: 0.9em;
 }
 
-  .mainCointainer{
+  .mainContainer{
     width: 100%;
-    margin-top: 50vh;
-    transform: translateY(-50%);
+    height: 100%;
+    text-align: center;
   }
   
   .container360{
@@ -66,13 +66,13 @@ span{
   }
 
 #background{
-  position: fixed;
+  position: absolute;
   display: block;
   top:0;
+  height: 100%;
   width: 100%;
-  height: 100vh;
   object-fit: cover;
-  overflow: hidden;
+  overflow: hidden !important;
   z-index: -1;
   opacity: 0.8;
 }
@@ -80,9 +80,9 @@ span{
 #mainTemp{
   border-top: 6px solid #fff;
   border-radius: 100%;
-  margin: 35px 50px -95px 50px;
-  height: 200px;
-  padding: 45px 15px 0px 15px;
+  margin: 35px 50px -93px 50px;
+  height: 160px;
+  padding: 40px 15px 40px 15px;
 }
 
 #riseSet{
@@ -90,6 +90,7 @@ span{
   position: relative;
   bottom: 22px;
   width: 285px;
+  font-size: 1.1em;
 }
 
 .header{
@@ -121,12 +122,13 @@ span{
   margin: 0.5em auto 0 auto;
 }
 
-#sunPosition{
+.sunMoonPsn{
   margin-left: -12px;
-  position: fixed;
+  position: absolute;
   height: 305px;
-  transform: rotate(90deg);
+  transform: rotate(-90deg);
   /*
+   
   left: -145px;
   top: 175px;
   */
@@ -235,6 +237,7 @@ input:focus, textarea:focus {
 }
 
 button{
+  margin: 2em;
   background: none;
   border: 1.5px solid #fff;
   border-radius: 2em;

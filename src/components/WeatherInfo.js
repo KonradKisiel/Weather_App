@@ -1,8 +1,10 @@
 import React from 'react';
+const SunCalc = require('./Suncalc/suncalc');
 
 const WeatherInfo = (props) => {
     const { city,
         date,
+        coord,
         temperature,
         description,
         pressure,
@@ -13,26 +15,40 @@ const WeatherInfo = (props) => {
         cloudiness,
         sunrise,
         sunset } = props.weatherInfo;
+
     const sunRotation = (date - sunrise) / (sunset - sunrise) * 180 - 90;
-    console.log("sun rotation");
-    console.log(sunRotation);
+
+    const moonData = SunCalc.getMoonTimes(date, coord.lat, coord.lon);
+    if (moonData.rise > moonData.set) {
+        const d = new Date();
+        d.setHours(24, 0, 0, 0);
+        const newMoonData = SunCalc.getMoonTimes(d, coord.lat, coord.lon);
+        moonData.set = newMoonData.set;
+    }
+    const moonRotation = (date - moonData.rise) / (moonData.set - moonData.rise) * 180 - 90;
+
+    console.log("moon data:")
+    console.log(moonData)
+
     const windRotation = 'rotate(' + wind_deg + ')';
     const pressureRotation = 'rotate(' + (pressure - 1000) * 2 + ')';
     const humidityOpacity = '#ffffff' + (Math.floor(humidity * 2.55)).toString(16);
     const cloudinessOpacity = '#ffffff' + (Math.floor(humidity * 2.55)).toString(16);
     //document.getelementById(sunBar).style.width 
-    const sunPsn = { transform: 'rotate(' + sunRotation + 'deg)' };
-    console.log(sunPsn);
-    /*
-    console.log(date);
-    console.log(sunrise);
-    console.log(sunset);
-    console.log(date - sunrise);
-    console.log(sunset - sunrise);
-    */
+    const sunPsn = {
+        transform: 'rotate(' + sunRotation + 'deg)',
+        display: (sunRotation > 90) || (sunRotation < -90) ? 'none' : 'visible'
+    };
+
+    const moonPsn = {
+        transform: 'rotate(' + moonRotation + 'deg)',
+        display: (moonRotation > 90) || (moonRotation < -90) ? 'none' : 'visible'
+    };
+    console.log(moonPsn);
+
     return (
         <div className="container360">
-            <p>{date.toDateString()}</p>
+            <p>{date.toDateString()}, {date.getHours()}:{date.getMinutes() < 10 ? "0" : ""}{date.getMinutes()}</p>
             <h1 className="header">{city}</h1>
             {/* 
              <div id="sunBar">
@@ -55,7 +71,13 @@ const WeatherInfo = (props) => {
                 </div>
             </div>
             */}
-            <svg id="sunPosition" style={sunPsn} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#fff" stroke="#fff">
+
+
+            <svg className="sunMoonPsn" style={moonPsn} xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                <path fill="none" stroke="#fff" stroke-linecap="round" stroke-width="2" d="M12.997 4.762A7.238 7.238 0 0 0 5.76 12a7.238 7.238 0 0 0 7.238 7.238 7.238 7.238 0 0 0 3.859-1.117A6.193 6.193 0 0 1 11.553 12a6.193 6.193 0 0 1 5.292-6.121 7.238 7.238 0 0 0-3.848-1.117z" />
+            </svg>
+
+            <svg className="sunMoonPsn" style={sunPsn} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#fff" stroke="#fff">
                 <path stroke-width=".469" d="M22.326 12.938H20.45a.939.939 0 1 1 0-1.877h1.876a.939.939 0 0 1 0 1.877zM18.64 6.69a.939.939 0 1 1-1.328-1.328l1.328-1.328a.939.939 0 1 1 1.327 1.328zM12 17.632a5.633 5.633 0 1 1 0-11.266 5.633 5.633 0 0 1 0 11.266zm0-9.387a3.755 3.755 0 1 0 0 7.51 3.755 3.755 0 0 0 0-7.51zm0-3.755a.939.939 0 0 1-.938-.94V1.675a.939.939 0 0 1 1.877 0V3.55A.94.94 0 0 1 12 4.49zm-6.638 2.2L4.034 5.362a.939.939 0 1 1 1.328-1.328L6.69 5.362A.939.939 0 1 1 5.362 6.69zM4.49 12c0 .518-.42.938-.94.938H1.674a.938.938 0 0 1 0-1.877h1.878c.519 0 .939.42.939.939zm.872 5.31a.94.94 0 0 1 1.328 1.328l-1.328 1.328a.939.939 0 1 1-1.328-1.328zM12 19.51c.519 0 .94.42.94.939v1.877a.94.94 0 0 1-1.878 0V20.45c0-.519.42-.939.938-.939zm6.639-2.2l1.327 1.328a.939.939 0 1 1-1.328 1.328l-1.327-1.328a.939.939 0 1 1 1.328-1.328z" />
             </svg>
             <div id="mainTemp">
@@ -67,6 +89,13 @@ const WeatherInfo = (props) => {
                 </span>
                 <span className="rightAlign">
                     {sunset.getHours()}:{sunset.getMinutes() < 10 ? "0" : ""}{sunset.getMinutes() + " "}
+                </span>
+                <br></br>
+                <span className="leftAlign">
+                    {moonData.rise.getHours()}:{moonData.rise.getMinutes() < 10 ? "0" : ""}{moonData.rise.getMinutes()}
+                </span>
+                <span className="rightAlign">
+                    {moonData.set.getHours()}:{moonData.set.getMinutes() < 10 ? "0" : ""}{moonData.set.getMinutes() + " "}
                 </span>
             </div>
             <h2 id="weatherDescription">{description}</h2>
@@ -116,14 +145,6 @@ const WeatherInfo = (props) => {
                 </div>
                  */}
             </div>
-            {/*
-                        <br></br>
-            <br></br>
-            <br></br>
-            <button onClick={props.newLocation}>Change location</button>
-             
-            <Forecast forecast={props.forecast} />
-             */}
         </div>
     )
 }
