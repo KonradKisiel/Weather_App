@@ -18,12 +18,21 @@ const WeatherInfo = (props) => {
 
     const sunRotation = (date - sunrise) / (sunset - sunrise) * 180 - 90;
 
-    const moonData = SunCalc.getMoonTimes(date, coord.lat, coord.lon);
+    let moonData = SunCalc.getMoonTimes(date, coord.lat, coord.lon);
+    if (moonData.set < date) {
+        const d = new Date();
+        d.setHours(24, 0, 0, 0);
+        moonData = SunCalc.getMoonTimes(d, coord.lat, coord.lon);
+    }
     if (moonData.rise > moonData.set) {
         const d = new Date();
         d.setHours(24, 0, 0, 0);
-        const newMoonData = SunCalc.getMoonTimes(d, coord.lat, coord.lon);
-        moonData.set = newMoonData.set;
+        moonData.set = SunCalc.getMoonTimes(d, coord.lat, coord.lon).set;
+    }
+    if (!moonData.rise) {
+        const d = new Date();
+        d.setHours(-24, 0, 0, 0)
+        moonData.rise = SunCalc.getMoonTimes(d, coord.lat, coord.lon).rise;
     }
     const moonRotation = (date - moonData.rise) / (moonData.set - moonData.rise) * 180 - 90;
 
