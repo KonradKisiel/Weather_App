@@ -94,38 +94,6 @@ class App extends Component {
         return Null;
     }
   }
-  /*
-    getWeather = () => {
-      const data = {
-        base: "stations",
-        clouds: { all: 0 },
-        cod: 200,
-        coord: { lon: 55.3, lat: 25.27 },
-        dt: 1547636400,
-        id: 292223,
-        main: { temp: 27.67, pressure: 1014, humidity: 37, temp_min: 27, temp_max: 28 },
-        name: "San Francisco",
-        sys: { type: 1, id: 7537, message: 0.0021, country: "US", sunrise: 1547607963, sunset: 1547646676 },
-        visibility: 10000,
-        weather: [{ id: 800, main: "Clear", description: "clear sky", icon: "01d" }],
-        wind: { speed: 4.6, deg: 320 },
-      }
-      const weather = data.weather[0].main;
-      const currentWeather = {
-        city: data.name,
-        country: data.sys.country,
-        temperature: data.main.temp,
-        description: data.weather[0].description,
-        pressure: data.main.pressure,
-        wind_deg: data.wind.deg,
-        wind_speed: data.wind.speed,
-        humidity: data.main.humidity,
-        icon: this.setIcon(data.weather[0].icon)
-      }
-      this.setState({ weather, currentWeather, newLocation: false })
-    }
-    */
-
   getWeather = async (e) => {
     e.preventDefault();
     const city = e.target.elements.city.value;
