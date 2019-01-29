@@ -67,8 +67,9 @@ span{
 }
 
 .centerContainer{
-  margin-top: 50%;
+  margin-top: 45%;
   transform: translateY(-50%);
+  height: 100px;
 }
 
 #background{
@@ -81,6 +82,7 @@ span{
   overflow: hidden !important;
   z-index: -1;
   opacity: 0.8;
+  transform: 0.3s;
 }
 
 #mainTemp{
@@ -316,7 +318,7 @@ label h3{
     opacity: 1;
 }
 
-/* toggle switch */
+/* toggle switch (checkbox) */
 .toggle p{
   margin: auto;
   position: relative;

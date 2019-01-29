@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Form from './components/Form';
+import LocationForm from './components/LocationForm';
 import WeatherInfo from './components/WeatherInfo';
 import ForecastCarousel from './components/ForecastCarousel';
 
@@ -128,7 +128,7 @@ class App extends Component {
       this.setState({
         weather: null,
         currentWeather: null,
-        error: "Please enter valid values" // '"' + err + '"'
+        error: "Please enter valid city and country names" // '"' + err + '"'
       })
     }
 
@@ -195,7 +195,7 @@ class App extends Component {
           )
             :
             (
-              <Form getWeather={this.getWeather} error={error} />
+              <LocationForm getWeather={this.getWeather} error={error} />
             )}
         </div>
       </div>
