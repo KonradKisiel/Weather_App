@@ -26,10 +26,6 @@ import Snow from './assets/icons/13d.svg'
 import Mist from './assets/icons/50d.svg'
 import Null from './assets/icons/null.svg'
 
-//register to OpenWeatherMap and paste API key here
-const API_KEY = "37ed176a584be416c6960e386d5d239c";
-let units = "metric"; //imperial also available
-
 class App extends Component {
   state = {
     weather: null,
@@ -94,13 +90,28 @@ class App extends Component {
         return Null;
     }
   }
+  setLocation = (e, locationOption) => {
+    switch (locationOption) {
+      case "cityR":
+        return `q=${e.target.elements.city.value},${e.target.elements.country.value}`;
+      case "autoR":
+      case "coordsR":
+        return `lat=${e.target.elements.lat.value}&lon=${e.target.elements.lon.value}`;
+      case "zipR":
+        return `zip=${e.target.elements.zip.value},${e.target.elements.country.value}`;
+    }
+  }
   getWeather = async (e) => {
     e.preventDefault();
-    const city = e.target.elements.city.value;
-    const country = e.target.elements.country.value;
+    //register to OpenWeatherMap and paste API key here
+    const API_KEY = "37ed176a584be416c6960e386d5d239c";
+    const locationOption = e.target.elements.locRadios.value;
+    const location = this.setLocation(e, locationOption);
+    const units = e.target.elements.switch.checked ? "imperial" : "metric";//imperial also available
+
     try {
       const data = await fetch(
-        `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&APPID=${API_KEY}&units=${units}`
+        `https://api.openweathermap.org/data/2.5/weather?${location}&appid=${API_KEY}&units=${units}`
       ).then(resp => resp.json());
       console.log(data);
       let currentData = new Date(Date.now());
@@ -111,6 +122,7 @@ class App extends Component {
         coord: data.coord,
         date: currentData,//new Date(data.dt * 1000), //Date.now(),
         country: data.sys.country,
+        units: units,
         temperature: data.main.temp,
         description: data.weather[0].description,
         pressure: data.main.pressure,
@@ -128,13 +140,13 @@ class App extends Component {
       this.setState({
         weather: null,
         currentWeather: null,
-        error: "Please enter valid city and country names" // '"' + err + '"'
+        error: "Please enter valid values" // '"' + err + '"'
       })
     }
 
     try {
       let data = await fetch(
-        `http://api.openweathermap.org/data/2.5/forecast?q=${city},${country}&APPID=${API_KEY}&units=${units}`
+        `https://api.openweathermap.org/data/2.5/forecast?${location}&appid=${API_KEY}&units=${units}`
       ).then(resp => resp.json());
       data = data.list;
       console.log(data);
@@ -142,6 +154,7 @@ class App extends Component {
         return {
           date: new Date(forecast.dt * 1000),
           icon: this.setIcon(forecast.weather[0].icon),
+          units: units,
           temperature: Math.floor(forecast.main.temp),
           description: forecast.weather[0].main
           /* humidity: forecast.main.humidity */

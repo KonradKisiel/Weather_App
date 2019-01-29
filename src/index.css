@@ -192,14 +192,8 @@ input[type="text"]
   outline: none;
 }
 
-input[name="city"]
-{
-  width: 320px;/*13.1em;270px;*/
-}
-
-input[name="country"]
-{
-  width: 320px;/*11.4em;238px*/
+.centerContainer input{
+  width: 320px;
 }
 
 input:-webkit-autofill,

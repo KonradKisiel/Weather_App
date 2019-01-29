@@ -16,7 +16,7 @@ class ForecastCarousel extends Component {
                                         <p>{element.date.toLocaleString('en-us', { weekday: 'short' })}</p>
                                         <p>{element.date.getHours()}:00</p>
                                         <img src={element.icon} alt="weather icon" />
-                                        <h2>{element.temperature}°c</h2>
+                                        <h2>{element.temperature}°{element.units === "metric" ? "C" : "F"}</h2>
                                         <p>{element.description}</p>
                                         {/* 
                                        <p>
