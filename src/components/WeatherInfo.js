@@ -58,7 +58,7 @@ const WeatherInfo = (props) => {
 
     return (
         <div className="container360">
-            <p>{date.toDateString()}, {date.getHours()}:{date.getMinutes() < 10 ? "0" : ""}{date.getMinutes()}</p>
+            <p>{date.toDateString()}, {units === "metric" ? date.getHours() : date.getHours() % 12}:{date.getMinutes() < 10 ? "0" : ""}{date.getMinutes()}{units === "metric" ? "" : date.getHours() < 12 ? " ㏂" : " ㏘"}</p>
             <h1 className="header">{city}</h1>
             <svg className="sunMoonPsn" style={moonPsn} xmlns="http://www.w3.org/2000/svg" width="24" height="24">
                 <path fill="none" stroke="#fff" stroke-linecap="round" stroke-width="2" d="M12.997 4.762A7.238 7.238 0 0 0 5.76 12a7.238 7.238 0 0 0 7.238 7.238 7.238 7.238 0 0 0 3.859-1.117A6.193 6.193 0 0 1 11.553 12a6.193 6.193 0 0 1 5.292-6.121 7.238 7.238 0 0 0-3.848-1.117z" />
@@ -72,17 +72,17 @@ const WeatherInfo = (props) => {
             </div>
             <div id="riseSet">
                 <span className="leftAlign">
-                    {sunrise.getHours()}:{sunrise.getMinutes() < 10 ? "0" : ""}{sunrise.getMinutes()}
+                    {units === "metric" ? sunrise.getHours() : sunrise.getHours() % 12}:{sunrise.getMinutes() < 10 ? "0" : ""}{sunrise.getMinutes()}{units === "metric" ? "" : sunrise.getHours() < 12 ? " ㏂" : " ㏘"}
                 </span>
                 <span className="rightAlign">
-                    {sunset.getHours()}:{sunset.getMinutes() < 10 ? "0" : ""}{sunset.getMinutes() + " "}
+                    {units === "metric" ? sunset.getHours() : sunset.getHours() % 12}:{sunset.getMinutes() < 10 ? "0" : ""}{sunset.getMinutes() + " "}{units === "metric" ? "" : sunset.getHours() < 12 ? " ㏂" : " ㏘"}
                 </span>
                 <br></br>
                 <span className="leftAlign">
-                    {moonData.rise.getHours()}:{moonData.rise.getMinutes() < 10 ? "0" : ""}{moonData.rise.getMinutes()}
+                    {units === "metric" ? moonData.rise.getHours() : moonData.rise.getHours() % 12}:{moonData.rise.getMinutes() < 10 ? "0" : ""}{moonData.rise.getMinutes()}{units === "metric" ? "" : moonData.rise.getHours() < 12 ? " ㏂" : " ㏘"}
                 </span>
                 <span className="rightAlign">
-                    {moonData.set.getHours()}:{moonData.set.getMinutes() < 10 ? "0" : ""}{moonData.set.getMinutes() + " "}
+                    {units === "metric" ? moonData.set.getHours() : moonData.set.getHours() % 12}:{moonData.set.getMinutes() < 10 ? "0" : ""}{moonData.set.getMinutes()}{units === "metric" ? "" : moonData.set.getHours() < 12 ? " ㏂" : " ㏘"}
                 </span>
             </div>
             <h2 id="weatherDescription">{description}</h2>
